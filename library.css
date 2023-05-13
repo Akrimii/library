@@ -1,0 +1,153 @@
+* {
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Raleyway",sans-serif;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    background: #A49497;
+    background: radial-gradient(ellipse at center, #A49497 0%, #CAC3CB 72%, #A49497 100%);
+}
+
+header {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+h1 {
+    font-size: 3rem;
+    font-family: "Alkatra";
+}
+
+button {
+    background-color: #ADADAD;
+    border-radius: 20px;
+    border: 2px #ADADAD solid;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: whitesmoke;
+    cursor: pointer;
+    margin:0;
+}
+
+button:hover {
+    color: black;
+    border: 2px black solid;
+}
+
+.popup {
+    visibility: hidden;
+    position: absolute;
+    background-color: whitesmoke;
+    padding: 10px;
+    width: 400px;
+    height: 250px;
+    border-radius: 10px;
+    left: 50%;
+    margin-left: -200px;
+    top: 50%;
+    margin-top: -125px;
+    border: 3px solid #adadad;
+    
+}
+
+
+.popup.open {
+    visibility: visible;
+    transform: translate(0,0) scale(1);
+}
+form {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    flex-wrap: wrap;
+    font-size: 0.9rem;
+}
+
+form>* {
+    margin-bottom: 5px;
+}
+
+form>label{
+    flex: 30%;
+}
+
+form>input {
+    flex: 70%;
+}
+
+form>label[for="question"] {
+    flex:50%;
+}
+
+input#question {
+    flex: 50%;
+    height: 15px;
+    width:15px;
+    margin-top: 10px;
+}
+
+form>button {
+    margin:auto;
+}
+
+label {
+    padding: 10px;
+}
+
+input {
+    border-radius: 20px;
+    border: none;
+    background-color: #ADADAD;
+    padding: 0px 20px;
+}
+
+.library {
+    width: 100%;
+    display: inline-flex;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 160px;
+    height: 220px;
+    background-color: whitesmoke ;
+    border-radius: 10px;
+    text-align: center;
+    display: inline-grid;
+    grid-template: repeat(8,1fr)/1fr;
+    box-shadow: 0px 0px 15px 1px rgba(0,0,0,0.15)
+}
+
+.title {
+    font-size: 1.1rem;
+    margin: auto;
+    grid-row: span 5;
+    font-family: "Alkatra";
+    font-style: italic;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.author{
+    font-family: "Alkatra";
+    font-size: 0.7rem;
+    grid-row:span 2;
+    text-transform: capitalize;
+}
+
+.card>div>button {
+    padding: 3px 6px;
+    font-size: 0.7rem;
+}
+

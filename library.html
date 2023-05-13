@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Corner Library</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alkatra">
+    <link rel="stylesheet" href="library.css">
+</head>
+
+
+<body>
+    <header>
+        <h1>Little Corner Library</h1>
+        <button onclick="openPopup()">+New Book</button>
+    </header>
+
+    <div class="popup">
+        <form class="addForm">
+            <label for="title">Title</label>
+            <input type="text" id="title" required><br>
+
+            <label for="author">Author</label>
+            <input type="text" id="author" required><br>
+
+            <label for="pages">Pages</label>
+            <input type="number" id="pages" required><br>
+
+            <label for="question">Have you read this?</label>
+            <input type="checkbox" id="question"><br>
+
+            <button type="submit" id="item">Submit</button>           
+        </form>
+    </div>
+
+    <div class="library">
+        
+    </div>
+    
+<script>
+    const popup=document.querySelector('.popup');
+    const library=document.querySelector('.library');
+    const addForm=document.querySelector('.addForm');
+    let books=JSON.parse(localStorage.getItem('books')) || [];
+
+    addBookToLibrary(books,library);
+
+    function openPopup() {
+        popup.classList.add('open');
+    }
+
+    function addItem(e) {
+        e.preventDefault();
+        const title=this.querySelector('#title').value;
+        const author=this.querySelector('#author').value;
+        const pages=this.querySelector('#pages').value;
+        const read=this.querySelector('#question').checked;
+        const book=new Book(title,author,pages,read);
+        books.push(book);
+        addOneBook(book);
+        localStorage.setItem('books',JSON.stringify(books));
+        popup.classList.remove('open');
+        this.reset();
+    }
+
+    function addOneBook(item) {
+        const card=document.createElement('div');
+        card.classList.add('card');
+        library.appendChild(card);
+        if (!item.read) {
+                card.innerHTML=`
+                    <div class="title">${item.title} </div>
+                    <div class="author">by ${item.author}</div>
+                    <div>
+                        <button id="markRead" onclick="markRead">Mark Read</button>
+                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
+                    </div>  
+                `
+            }
+            else {
+                card.innerHTML=`
+                    <div class="title">${item.title} </div>
+                    <div class="author">by ${item.author}</div>
+                    <div>
+                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
+                    </div>  
+                `
+            }
+        }
+
+    function addBookToLibrary(items,itemsList) {
+        items.map((item,i)=>{
+            const card=document.createElement('div');
+            card.classList.add('card');
+            library.appendChild(card);
+            if (!item.read) {
+                card.innerHTML=`
+                    <div class="title">${item.title} </div>
+                    <div class="author">by ${item.author}</div>
+                    <div>
+                        <button id="markRead" onclick="markRead()">Mark Read</button>
+                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
+                    </div>  
+                `
+            }
+            else {
+                card.innerHTML=`
+                    <div class="title">${item.title} </div>
+                    <div class="author">by ${item.author}</div>
+                    <div>
+                        <button id="deleteButton" data-index=${i} onclick="deleteBook()">Remove</button>
+                    </div>  
+                `
+            }
+        });
+    }
+
+    function Book(title,author,pages,read) {
+        this.title=title
+        this.author=author
+        this.pages=pages
+        this.read=read
+    }
+
+    Book.prototype.info=function() {
+        if (this.read) {
+            return `${this.title} by ${this.author}, ${this.pages}, not read yet.`;
+        } else {
+            return `${this.title} by ${this.author}, ${this.pages}, already read it.`;
+        }
+    }
+
+    addForm.addEventListener('submit',addItem)
+
+    function deleteBook(e) {
+        console.log(this);
+    }
+
+
+</script>
+    
+</body>
+</html>
+
+<!--
+-make sure remove button working
+-make sure mark read button working
+-add close X button to popup
+-arrange alphabetically but ignore articles
+
+
+ -->
+
