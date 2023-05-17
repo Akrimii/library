@@ -28,9 +28,6 @@
             <label for="pages">Pages</label>
             <input type="number" id="pages" required><br>
 
-            <label for="question">Have you read this?</label>
-            <input type="checkbox" id="question"><br>
-
             <button type="submit" id="item">Submit</button>           
         </form>
     </div>
@@ -56,8 +53,7 @@
         const title=this.querySelector('#title').value;
         const author=this.querySelector('#author').value;
         const pages=this.querySelector('#pages').value;
-        const read=this.querySelector('#question').checked;
-        const book=new Book(title,author,pages,read);
+        const book=new Book(title,author,pages);
         books.push(book);
         addOneBook(book);
         localStorage.setItem('books',JSON.stringify(books));
@@ -69,25 +65,10 @@
         const card=document.createElement('div');
         card.classList.add('card');
         library.appendChild(card);
-        if (!item.read) {
-                card.innerHTML=`
-                    <div class="title">${item.title} </div>
-                    <div class="author">by ${item.author}</div>
-                    <div>
-                        <button id="markRead" onclick="markRead">Mark Read</button>
-                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
-                    </div>  
+            card.innerHTML=`
+                <div data-index=${i} class="title">${item.title} </div>
+                <div class="author">by ${item.author}</div> 
                 `
-            }
-            else {
-                card.innerHTML=`
-                    <div class="title">${item.title} </div>
-                    <div class="author">by ${item.author}</div>
-                    <div>
-                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
-                    </div>  
-                `
-            }
         }
 
     function addBookToLibrary(items,itemsList) {
@@ -95,48 +76,25 @@
             const card=document.createElement('div');
             card.classList.add('card');
             library.appendChild(card);
-            if (!item.read) {
-                card.innerHTML=`
-                    <div class="title">${item.title} </div>
-                    <div class="author">by ${item.author}</div>
-                    <div>
-                        <button id="markRead" onclick="markRead()">Mark Read</button>
-                        <button id="deleteButton" onclick="deleteBook()">Remove</button>
-                    </div>  
+            card.innerHTML=`
+                <div data-index=${i} class="title">${item.title} </div>
+                <div class="author">by ${item.author}</div> 
                 `
-            }
-            else {
-                card.innerHTML=`
-                    <div class="title">${item.title} </div>
-                    <div class="author">by ${item.author}</div>
-                    <div>
-                        <button id="deleteButton" data-index=${i} onclick="deleteBook()">Remove</button>
-                    </div>  
-                `
-            }
         });
     }
 
-    function Book(title,author,pages,read) {
+    function Book(title,author,pages) {
         this.title=title
         this.author=author
         this.pages=pages
-        this.read=read
     }
 
     Book.prototype.info=function() {
-        if (this.read) {
-            return `${this.title} by ${this.author}, ${this.pages}, not read yet.`;
-        } else {
-            return `${this.title} by ${this.author}, ${this.pages}, already read it.`;
-        }
+        return `${this.title} by ${this.author}, ${this.pages}`;
     }
 
     addForm.addEventListener('submit',addItem)
 
-    function deleteBook(e) {
-        console.log(this);
-    }
 
 
 </script>
@@ -144,12 +102,5 @@
 </body>
 </html>
 
-<!--
--make sure remove button working
--make sure mark read button working
--add close X button to popup
--arrange alphabetically but ignore articles
 
-
- -->
 
